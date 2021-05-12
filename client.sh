@@ -1,7 +1,7 @@
 #!/bin/ash
 ## LEGO CA Certificate Request
 
-if [[ $1 == "firstRun" ]]; then
+if [[ $1 == "firstStart" ]]; then
     while [ ! -e /tmp/legoStatus ]; do sleep 1; done
     cat /tmp/legoStatus
 else
