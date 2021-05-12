@@ -15,6 +15,7 @@ fi
 if [[ $(cat /data/certs/certServer | head -n 1) == "" ]]; then
     echo Enter the Certificate Server Address in /data/certs/certServer
     ng=1
+fi
 if [ ! -e /data/certs/email ]; then
     touch /data/certs/email
     chown node-red:root /data/certs/email
@@ -27,9 +28,14 @@ if [ $ng -eq 1 ]; then
     echo Unsatisfied configuration files.  Cannot update certificates.
     exit 0
 fi
-    
-copy -f /data/certs/ca.crt /usr/local/share/ca-certificates/root_ca.crt
-update-ca-certificates
+
+if [ -e /data/certs/ca.crt ]; then
+    copy -f /data/certs/ca.crt /usr/local/share/ca-certificates/root_ca.crt
+    update-ca-certificates
+else
+    echo CA Certificate must be located at /data/certs/ca.crt.
+    exit 0
+fi
 
 domain=$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}')
 certServer=$(cat /data/certs/certServer | head -n 1)
