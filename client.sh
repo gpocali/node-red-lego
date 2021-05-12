@@ -30,7 +30,7 @@ if [ $ng -eq 1 ]; then
 fi
 
 if [ -e /data/certs/ca.crt ]; then
-    copy -f /data/certs/ca.crt /usr/local/share/ca-certificates/root_ca.crt
+    cp -f /data/certs/ca.crt /usr/local/share/ca-certificates/root_ca.crt
     update-ca-certificates
 else
     echo CA Certificate must be located at /data/certs/ca.crt.
