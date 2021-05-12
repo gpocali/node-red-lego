@@ -31,4 +31,4 @@ EXPOSE 1880
 # Add a healthcheck (default every 30 secs)
 #HEALTHCHECK CMD node /healthcheck.js
 
-ENTRYPOINT ["/bin/client.sh", "&&", "npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+ENTRYPOINT ["/bin/client.sh", "firstStart", "&&", "npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
