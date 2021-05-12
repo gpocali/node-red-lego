@@ -2,8 +2,10 @@
 ## LEGO CA Certificate Request
 
 if [[ $1 == "firstStart" ]]; then
-    while [ ! -e /tmp/legoStatus ]; do sleep 1; done
-    cat /tmp/legoStatus
+    echo -n $(date) - First Start...
+    crond -b -l 8 -c /etc/crontabs
+    while [ ! -e /tmp/legoStatus ]; do sleep 1; echo -n .; done
+    cat /tmp/legoLog
 else
     # Wait for network
     while ! route | grep default > /dev/null; do sleep 1; done

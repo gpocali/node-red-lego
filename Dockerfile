@@ -2,7 +2,7 @@ FROM nodered/node-red:latest
 
 USER root
 
-RUN apk add lego ca-certificates
+RUN apk add lego ca-certificates crond
 
 COPY ./client.sh /bin/client.sh
 RUN chmod 775 /bin/client.sh
