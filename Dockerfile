@@ -1,5 +1,7 @@
 FROM nodered/node-red:latest
 
+USER root
+
 RUN apk add lego ca-certificates
 
 COPY ./client.sh /bin/client.sh
