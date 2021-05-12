@@ -10,12 +10,14 @@ fi
 ng=0
 if [ ! -e /data/certs/certServer ]; then
     touch /data/certs/certServer
+    chown node-red:root /data/certs/certServer
 fi
 if [[ $(cat /data/certs/certServer | head -n 1) == "" ]]; then
     echo Enter the Certificate Server Address in /data/certs/certServer
     ng=1
 if [ ! -e /data/certs/email ]; then
     touch /data/certs/email
+    chown node-red:root /data/certs/email
 fi
 if [[ $(cat /data/certs/email | head -n 1) == "" ]]; then
     echo Enter the registration email in /data/certs/email
@@ -28,9 +30,15 @@ fi
     
 copy -f /data/certs/ca.crt /usr/local/share/ca-certificates/root_ca.crt
 update-ca-certificates
-lego -s "$(cat /data/certs/certServer | head -n 1)" -a -m "$(cat /data/certs/email | head -n 1)" -d "$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}')" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 renew || \
-lego -s "$(cat /data/certs/certServer | head -n 1)" -a -m "$(cat /data/certs/email | head -n 1)" -a -m "$(cat /data/certs/email | head -n 1)" -d "$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}')" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 run
-cp -f /root/.lego/certificates/$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}').crt /data/certs/server.crt
-cp -f /root/.lego/certificates/$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}').key /data/certs/server.key
+
+domain=$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}')
+certServer=$(cat /data/certs/certServer | head -n 1)
+email=$(cat /data/certs/email | head -n 1)
+lego -s "$certServer" -a -m "$email" -d "$domain" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 renew || \
+lego -s "$certServer" -a -m "$email" -d "$domain" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 run
+cp -f /root/.lego/certificates/$domain.crt /data/certs/server.crt
+chown node-red:root /data/certs/server.crt
+cp -f /root/.lego/certificates/$domain.key /data/certs/server.key
+chown node-red:root /data/certs/server.key
 
 exit 0

@@ -3,7 +3,8 @@ FROM nodered/node-red:latest
 CMD apk add lego ca-certificates
 
 COPY ./client.sh /bin/client.sh
-CMD chmod +x /bin/client.sh
+CMD chmod 775 /bin/client.sh
+CMD chown node-red:root /bin/client.sh
 
 COPY ./lego /etc/crontabs/lego
 CMD chmod 600 /etc/crontabs/lego

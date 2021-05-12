@@ -1,3 +1,2 @@
 # Lego SSL Certificate Renewal
-@reboot         /bin/client.sh
 @daily          /bin/client.sh
