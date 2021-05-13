@@ -3,7 +3,7 @@
 
 if [[ $1 == "firstStart" ]]; then
     echo -n $(date) - First Start...
-    crond -b -l 8 -c /etc/crontabs
+    sudo -u root crond -b -l 8 -c /etc/crontabs
     while [ ! -e /tmp/legoStatus ]; do sleep 1; echo -n .; done
     cat /tmp/legoLog
 else
