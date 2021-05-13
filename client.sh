@@ -6,6 +6,7 @@ if [[ $1 == "firstStart" ]]; then
     crond -b -l 8 -c /etc/crontabs
     while [ ! -e /tmp/legoStatus ]; do sleep 1; echo -n .; done
     cat /tmp/legoLog
+    sudo -u node-red npm --no-update-notifier --no-fund start --cache /data/.npm -- --userDir /data
 else
     # Wait for network
     while ! route | grep default > /dev/null; do sleep 1; done
