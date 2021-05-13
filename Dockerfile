@@ -15,7 +15,6 @@ RUN chmod 600 /etc/crontabs/lego
 EXPOSE 1881
 
 ## Copied from parent Dockerfile for launch
-USER node-red
 
 # Env variables
 #ENV NODE_RED_VERSION=$NODE_RED_VERSION \
@@ -31,4 +30,4 @@ EXPOSE 1880
 # Add a healthcheck (default every 30 secs)
 #HEALTHCHECK CMD node /healthcheck.js
 
-ENTRYPOINT ["/bin/client.sh", "firstStart", "&&", "npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+ENTRYPOINT ["/bin/client.sh", "firstStart", "&&", "sudo", "-u", "node-red", "npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
