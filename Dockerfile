@@ -11,15 +11,12 @@ RUN chown node-red:root /bin/client.sh
 COPY ./lego /etc/crontabs/lego
 RUN chmod 600 /etc/crontabs/lego
 
-# EXPOSE PORT FOR LEGO CHALLENGE
-EXPOSE 1881
-
 ## Copied from parent Dockerfile for launch
 
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION \
     NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
-    FLOWS=flows.json
+    FLOWS=/data/flows.json
 
 # ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
 # ENV NODE_RED_ENABLE_PROJECTS=true     # Uncomment to enable projects option

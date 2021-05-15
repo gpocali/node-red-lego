@@ -37,8 +37,8 @@ fi
 domain=$(nslookup $(ifconfig $(route | grep default | awk '{print $8}') | grep "inet addr" | awk '{print $2}' | cut -d: -f2) | grep name | awk '{print $4}')
 certServer=$(cat /data/certs/certServer | head -n 1)
 email=$(cat /data/certs/email | head -n 1)
-lego -s "$certServer" -a -m "$email" --path /data/.lego -d "$domain" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 renew || \
-lego -s "$certServer" -a -m "$email" --path /data/.lego -d "$domain" --http.webroot "/tmp/lego" --http.port 1081 --http --tls --http-timeout 10 run
+lego -s "$certServer" -a -m "$email" --path /data/.lego -d "$domain" --tls --http-timeout 10 renew || \
+lego -s "$certServer" -a -m "$email" --path /data/.lego -d "$domain" --tls --http-timeout 10 run
 cp -f /data/.lego/certificates/$domain.crt /data/certs/server.crt
 chown node-red:root /data/certs/server.crt
 cp -f /data/.lego/certificates/$domain.key /data/certs/server.key
