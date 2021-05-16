@@ -2,7 +2,7 @@ FROM nodered/node-red:latest
 
 USER root
 
-RUN apk add --no-cache lego ca-certificates dcron sudo
+RUN apk add --no-cache lego ca-certificates dcron sudo tzdata
 
 COPY ./client.sh /bin/client.sh
 RUN chmod 775 /bin/client.sh
