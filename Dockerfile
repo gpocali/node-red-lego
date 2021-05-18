@@ -8,8 +8,8 @@ COPY ./client.sh /bin/client.sh
 RUN chmod 775 /bin/client.sh
 RUN chown node-red:root /bin/client.sh
 
-COPY ./lego /etc/crontabs/lego
-RUN chmod 600 /etc/crontabs/lego
+COPY ./lego /etc/cron.d/lego
+RUN chmod 600 /etc/cron.d/lego
 
 ## Copied from parent Dockerfile for launch
 

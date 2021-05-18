@@ -60,9 +60,9 @@ chown node-red:root /data/certs/server.crt
 cp -f /data/.lego/certificates/$domain.key /data/certs/server.key
 chown node-red:root /data/certs/server.key
 
-if [[ $1 == "firstStart" ]]; then
+if [[ "$1" == "firstStart" ]]; then
     echo -n $(date) - First Start...
-    crond -b -l 8 -c /etc/crontabs
+    crond -b
     sudo -u node-red npm --no-update-notifier --no-fund start --cache /data/.npm -- --userDir /data
 fi
 
