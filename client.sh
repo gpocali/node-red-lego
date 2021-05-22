@@ -62,7 +62,7 @@ chown node-red:root /data/certs/server.key
 
 if [[ "$1" == "firstStart" ]]; then
     echo -n $(date) - First Start...
-    crond -b -L /tmp/cron.log
+    crond -b -s /etc/cron.d -L /dev/stdout
     sudo -u node-red npm --no-update-notifier --no-fund start --cache /data/.npm -- --userDir /data
 fi
 
